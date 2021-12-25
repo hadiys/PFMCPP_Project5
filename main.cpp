@@ -79,25 +79,8 @@ Purpose:  This project continues developing Project3.
 #include <iostream>
 #include <string>
 
-
-
 struct PencilCase
 {
-	struct Pencil
-	{
-		float sharpness = 1.5f;
-		bool sharpEnough = false;
-		std::string color = "Brown";
-		bool canColor;
-		std::string shade;
-		
-		Pencil();
-		~Pencil();
-		
-		void sharpen(int rotations);
-		void writeSomething(std::string writing);
-		bool isSharp();
-	};
 
 	char openMechanism = 'Z';
 	int maxItemsToHold;
@@ -112,6 +95,22 @@ struct PencilCase
 	void close();	
     void addItems(int itemsToAdd = 1);
     void removeItems(int itemsToRemove);
+	
+    struct Pencil
+	{
+		float sharpness = 1.5f;
+		bool sharpEnough = false;
+		std::string color = "Brown";
+		bool canColor;
+		std::string shade;
+		
+		Pencil();
+		~Pencil();
+		
+		void sharpen(int rotations);
+		void writeSomething(std::string writing);
+		bool isSharp();
+	};
 };
 
 struct Drill
@@ -133,23 +132,6 @@ struct Drill
 
 struct Elevator
 {
-	struct ElevatorUser
-	{
-		double weight;
-		int destinationFloor;
-		int currentFloor;
-		bool isInsideElevator = false;
-		bool canExit = true;
-
-		ElevatorUser();
-		~ElevatorUser();
-
-		void callElevator();
-        void enterElevator();
-        void setDestination(int newDestinationFloor);
-		void exitElevator();
-		void takeStairsInstead(int newDestinationFloor);
-	};
 
 	int highestFloor = 50;
 	int lowestFloor = -2;
@@ -169,11 +151,30 @@ struct Elevator
 	bool canTakePassengerWeight(double userWeight);
 	void updateWeightCarried(double userWeight, bool userExit);
 	bool arrived();
+	
+    struct ElevatorUser
+	{
+		double weight;
+		int destinationFloor;
+		int currentFloor;
+		bool isInsideElevator = false;
+		bool canExit = true;
+
+		ElevatorUser();
+		~ElevatorUser();
+
+		void callElevator();
+        void enterElevator();
+        void setDestination(int newDestinationFloor);
+		void exitElevator();
+		void takeStairsInstead(int newDestinationFloor);
+	};
 };
 
 struct SchoolBag
 {
     PencilCase schoolPencilCase;
+
     SchoolBag();
     ~SchoolBag();
 
@@ -186,6 +187,7 @@ struct Building
     Elevator elevatorA{"A1"};
     Elevator elevatorB{"B1"};
 	bool isOpen;
+
     Building();
     ~Building();
 
@@ -275,6 +277,7 @@ void PencilCase::addItems(int itemsToAdd)
 	if(isOpen)
 	{
 		std::cout << "Adding items to pencilcase..." << std::endl;
+
 		while(numItemsAdded < maxItemsToHold && itemsToAdd > 0)
 		{
 			++numItemsAdded;
@@ -303,7 +306,7 @@ void PencilCase::removeItems(int itemsToRemove)
 		}
 		else
 			std::cout << "Pencilcase is closed or nothing inside" << std::endl;
-		}
+    }
 	else
 		std::cout << "Can't remove " << itemsToRemove << " items"  << std::endl;
 }
@@ -331,14 +334,12 @@ void Drill::drillHole(int holes)
         std::cout << "You can't drill " << holes << " holes..." << std::endl;
     else 
 		std::cout << "Whoops! Check if your drill is ready" << std::endl;
-
 }
 
 void Drill::unplug()
 {
 	isPlugged = false;
 	std::cout << "Unplugged drill" << std::endl;
-
 }
 
 void Drill::attachDrillbit(float drillbitWidth)
@@ -352,7 +353,7 @@ void Drill::attachDrillbit(float drillbitWidth)
 
 	drillbitAttached = true;	
 
-	std::cout << "Drill bit secured" << std::endl;
+	std::cout << "Drillbit secured" << std::endl;
 }
 
 // =========== ElevatorUser Functions ===========
@@ -372,9 +373,7 @@ void Elevator::ElevatorUser::callElevator()
 	if(!isInsideElevator)
 		std::cout << "Calling elevator..." << std::endl;
 	else
-	{ 
 		std::cout << "Wait till you exit the elevator" << std::endl;
-	}
 }
 
 void Elevator::ElevatorUser::enterElevator()
@@ -391,7 +390,6 @@ void Elevator::ElevatorUser::enterElevator()
 void Elevator::ElevatorUser::setDestination(int newDestinationFloor)
 {
 	destinationFloor = newDestinationFloor;
-	
 	std::cout << "Destination floor " << destinationFloor << std::endl;
 }
 
@@ -413,15 +411,11 @@ void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
 	destinationFloor = newDestinationFloor;
 
 	if(currentFloor > destinationFloor)
-	{
 		for(int i = currentFloor; i > destinationFloor; --i)
 			--currentFloor;
-	}
 	else
-	{
 		for(int i = currentFloor; i < destinationFloor; ++i)
 			++currentFloor;
-	}
 	
 	std::cout << "You have taken the stairs to floor " << currentFloor << std::endl;
 }
@@ -461,9 +455,7 @@ void Elevator::goToFloor(int designatedFloor)
 void Elevator::onboardPassenger(double userWeight)
 {
 	if(arrived() && canTakePassengerWeight(userWeight))
-	{
 		updateWeightCarried(userWeight, true);
-	}
 	else
 		std::cout << "This passenger cannot board the elevator" << std::endl;
 }
@@ -471,12 +463,9 @@ void Elevator::onboardPassenger(double userWeight)
 void Elevator::offboardPassenger()
 {
 	if(arrived() && lastUserWeight > 0)
-	{
 		updateWeightCarried(lastUserWeight, false);
-	}
 	else
 		std::cout << "The elevator has not arrived to a floor yet or no passengers inside" << std::endl;
-
 }
 
 void Elevator::updateWeightCarried(double userWeight, bool goingInside)
