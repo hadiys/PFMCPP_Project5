@@ -244,7 +244,7 @@ void PencilCase::Pencil::writeSomething(std::string writing)
 {
     std::cout << writing << std::endl;
     std::cout << "Finished writing" << std::endl;
-    sharpness-= 0.089f;
+    sharpness -= 0.089f;
 }
 
 bool PencilCase::Pencil::isSharp()
@@ -303,8 +303,8 @@ void PencilCase::removeItems(int itemsToRemove)
 
             while(numItemsAdded > 0 && itemsToRemove > 0)
             {
-                numItemsAdded--;
-                itemsToRemove--;
+                --numItemsAdded;
+                --itemsToRemove;
             }
             std::cout << numItemsAdded << " items remaining" << std::endl;
         }
@@ -427,7 +427,7 @@ void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
     destinationFloor = newDestinationFloor;
 
     while(destinationFloor != currentFloor)
-            (destinationFloor > currentFloor) ? ++currentFloor : --currentFloor; 
+        (destinationFloor > currentFloor) ? ++currentFloor : --currentFloor; 
 
     std::cout << "You have taken the stairs to floor " << currentFloor << std::endl;
 }
