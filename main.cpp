@@ -82,93 +82,93 @@ Purpose:  This project continues developing Project3.
 struct PencilCase
 {
 
-	char openMechanism = 'Z';
-	int maxItemsToHold;
-	bool isOpen;
-	int numItemsAdded = 0;
+    char openMechanism = 'Z';
+    int maxItemsToHold;
+    bool isOpen;
+    int numItemsAdded = 0;
     bool inSchoolBag = false;
 
-	PencilCase();
-	~PencilCase();
+    PencilCase();
+    ~PencilCase();
 
-	void open(); 
-	void close();	
+    void open(); 
+    void close();	
     void addItems(int itemsToAdd = 1);
     void removeItems(int itemsToRemove);
 	
     struct Pencil
-	{
-		float sharpness = 1.5f;
-		bool sharpEnough = false;
-		std::string color = "Brown";
-		bool canColor;
-		std::string shade;
-		
-		Pencil();
-		~Pencil();
-		
-		void sharpen(int rotations);
-		void writeSomething(std::string writing);
-		bool isSharp();
-	};
+    {
+        float sharpness = 1.5f;
+        bool sharpEnough = false;
+        std::string color = "Brown";
+        bool canColor;
+        std::string shade;
+        
+        Pencil();
+        ~Pencil();
+        
+        void sharpen(int rotations);
+        void writeSomething(std::string writing);
+        bool isSharp();
+    };
 };
 
 struct Drill
 {
-	bool isPlugged;
-	bool drillbitAttached;
-	int powerInWatts;
-	char drillType = 'H';
-	float rotationsToSecureBit = 0;
-	float chuckTightness = 0.f;
+    bool isPlugged;
+    bool drillbitAttached;
+    int powerInWatts;
+    char drillType = 'H';
+    float rotationsToSecureBit = 0;
+    float chuckTightness = 0.f;
 
-	Drill();
-	~Drill();
+    Drill();
+    ~Drill();
 
-	void drillHole(int holes);
-	void unplug();
-	void attachDrillbit(float drillbitWidth);
+    void drillHole(int holes);
+    void unplug();
+    void attachDrillbit(float drillbitWidth);
 };
 
 struct Elevator
 {
 
-	int highestFloor = 50;
-	int lowestFloor = -2;
-	double totalWeightCarried = 0.0;
-	bool elevatorArrived = false;
-	double maxWeight;
-	int currentFloor;
-	double lastUserWeight = 0;
-	std::string name;
+    int highestFloor = 50;
+    int lowestFloor = -2;
+    double totalWeightCarried = 0.0;
+    bool elevatorArrived = false;
+    double maxWeight;
+    int currentFloor;
+    double lastUserWeight = 0;
+    std::string name;
 
-	Elevator(std::string name);
-	~Elevator();
+    Elevator(std::string name);
+    ~Elevator();
 
-	void goToFloor(int designatedFloor);
+    void goToFloor(int designatedFloor);
     void onboardPassenger(double userWeight);
-	void offboardPassenger();
-	bool canTakePassengerWeight(double userWeight);
-	void updateWeightCarried(double userWeight, bool userExit);
-	bool arrived();
+    void offboardPassenger();
+    bool canTakePassengerWeight(double userWeight);
+    void updateWeightCarried(double userWeight, bool userExit);
+    bool arrived();
 	
     struct ElevatorUser
-	{
-		double weight;
-		int destinationFloor;
-		int currentFloor;
-		bool isInsideElevator = false;
-		bool canExit = true;
+    {
+        double weight;
+        int destinationFloor;
+        int currentFloor;
+        bool isInsideElevator = false;
+        bool canExit = true;
 
-		ElevatorUser();
-		~ElevatorUser();
+        ElevatorUser();
+        ~ElevatorUser();
 
-		void callElevator();
+        void callElevator();
         void enterElevator();
         void setDestination(int newDestinationFloor);
-		void exitElevator();
-		void takeStairsInstead(int newDestinationFloor);
-	};
+        void exitElevator();
+        void takeStairsInstead(int newDestinationFloor);
+    };
 };
 
 struct SchoolBag
@@ -186,16 +186,16 @@ struct Building
 {
     Elevator elevatorA{"A1"};
     Elevator elevatorB{"B1"};
-	bool isOpen;
+    bool isOpen;
 
     Building();
     ~Building();
 
-	void closeBuilding();
-	void openBuilding();
-	bool buildingEmpty();
-	void clearBuilding();
-	void callElevatorAAndTakePassenger(int designatedFloor, double passengerWeight);
+    void closeBuilding();
+    void openBuilding();
+    bool buildingEmpty();
+    void clearBuilding();
+    void callElevatorAAndTakePassenger(int designatedFloor, double passengerWeight);
 };
 
 // ============Pencil Functions ================
@@ -212,288 +212,288 @@ PencilCase::Pencil::~Pencil()
 
 void PencilCase::Pencil::sharpen(int rotations)
 {
-	if(!isSharp())
-	{
-		std::cout << "Sharpening..." << std::endl;
-		for(int i = 0; i < rotations; ++i)
-			sharpness += 0.067f;
+    if(!isSharp())
+    {
+        std::cout << "Sharpening..." << std::endl;
+        for(int i = 0; i < rotations; ++i)
+            sharpness += 0.067f;
 
-			if(sharpness > 1.5f && sharpness < 2.5f)
-			{
-				sharpEnough = true;
-				std::cout << "Pencil sharpened" << std::endl;
-			}	
-			else if(sharpness >= 2.5f)
-			{
-				sharpEnough = true;
-				std::cout << "Super sharp!" << std::endl;
-			}
-			else
-			{
-				sharpEnough = false;
-				std::cout << "Needs more sharpening" << std::endl;
-			}	
-	}
-	else
-		std::cout << "Pencil sharp enough" << std::endl;
+        if(sharpness > 1.5f && sharpness < 2.5f)
+        {
+            sharpEnough = true;
+            std::cout << "Pencil sharpened" << std::endl;
+        }	
+        else if(sharpness >= 2.5f)
+        {
+            sharpEnough = true;
+            std::cout << "Super sharp!" << std::endl;
+        }
+        else
+        {
+            sharpEnough = false;
+            std::cout << "Needs more sharpening" << std::endl;
+        }	
+    }
+    else
+        std::cout << "Pencil sharp enough" << std::endl;
 }
 
 void PencilCase::Pencil::writeSomething(std::string writing)
 {
-	std::cout << writing << std::endl;
-	std::cout << "Finished writing" << std::endl;
-	sharpness-= 0.089f;
+    std::cout << writing << std::endl;
+    std::cout << "Finished writing" << std::endl;
+    sharpness-= 0.089f;
 }
 
 bool PencilCase::Pencil::isSharp()
 {
-	return sharpEnough;
+    return sharpEnough;
 }
 
 // ===============PencilCase Functions=================
 
 PencilCase::PencilCase() : maxItemsToHold(20), isOpen(false)
 {
-	std::cout << "****** PencilCase Created ******" << std::endl;	
+    std::cout << "****** PencilCase Created ******" << std::endl;	
 }
 
 PencilCase::~PencilCase()
 {
-	std::cout << "****** PencilCase Destroyed ******" << std::endl;
+    std::cout << "****** PencilCase Destroyed ******" << std::endl;
 }
 
 void PencilCase::open()
 {
-	isOpen = true;
+    isOpen = true;
 }
 
 void PencilCase::close()
 {
-	isOpen = false;
+    isOpen = false;
 }
 
 void PencilCase::addItems(int itemsToAdd)
 {
-	if(isOpen)
-	{
-		std::cout << "Adding items to pencilcase..." << std::endl;
+    if(isOpen)
+    {
+        std::cout << "Adding items to pencilcase..." << std::endl;
 
-		while(numItemsAdded < maxItemsToHold && itemsToAdd > 0)
-		{
-			++numItemsAdded;
-			--itemsToAdd;
-		}
-		(numItemsAdded == maxItemsToHold) ?  std::cout << "Pencilcase full!" << std::endl : std::cout << numItemsAdded << " items added..." << std::endl;
-	}
-	else
-		std::cout << "Open the pencilcase first" << std::endl;
+    while(numItemsAdded < maxItemsToHold && itemsToAdd > 0)
+    {
+        ++numItemsAdded;
+        --itemsToAdd;
+    }
+    (numItemsAdded == maxItemsToHold) ?  std::cout << "Pencilcase full!" << std::endl : std::cout << numItemsAdded << " items added..." << std::endl;
+    }
+    else
+        std::cout << "Open the pencilcase first" << std::endl;
 }
 
 void PencilCase::removeItems(int itemsToRemove)
 {
     if(itemsToRemove > 0)
-	{
-		if(isOpen && numItemsAdded > 0)
-		{
-			std::cout << "Items leaving the pencilcase..." << std::endl;
+    {
+        if(isOpen && numItemsAdded > 0)
+        {
+            std::cout << "Items leaving the pencilcase..." << std::endl;
 
-			while(numItemsAdded > 0 && itemsToRemove > 0)
-			{
-				numItemsAdded--;
-				itemsToRemove--;
-			}
-			std::cout << numItemsAdded << " items remaining" << std::endl;
-		}
-		else
-			std::cout << "Pencilcase is closed or nothing inside" << std::endl;
+            while(numItemsAdded > 0 && itemsToRemove > 0)
+            {
+                numItemsAdded--;
+                itemsToRemove--;
+            }
+            std::cout << numItemsAdded << " items remaining" << std::endl;
+        }
+        else
+            std::cout << "Pencilcase is closed or nothing inside" << std::endl;
     }
-	else
-		std::cout << "Can't remove " << itemsToRemove << " items"  << std::endl;
+    else
+        std::cout << "Can't remove " << itemsToRemove << " items"  << std::endl;
 }
 
 // ============= Drill Functions =================
 
 Drill::Drill() : isPlugged(true), drillbitAttached(false), powerInWatts(3600) 
 {
-	std::cout << "****** Drill Created ******" << std::endl;
+    std::cout << "****** Drill Created ******" << std::endl;
 }
 
 Drill::~Drill()
 {
-	std::cout << "****** Drill Destroyed ******" << std::endl;
+    std::cout << "****** Drill Destroyed ******" << std::endl;
 }
 
 void Drill::drillHole(int holes)
 {
-	if(isPlugged && drillbitAttached && holes > 0)
-	{
-		std::cout << "Drilling holes..." << std::endl;
-		std::cout << "Drilling done!!" << std::endl;
-	}
-	else if(holes < 1)
+    if(isPlugged && drillbitAttached && holes > 0)
+    {
+        std::cout << "Drilling holes..." << std::endl;
+        std::cout << "Drilling done!!" << std::endl;
+    }
+    else if(holes < 1)
         std::cout << "You can't drill " << holes << " holes..." << std::endl;
     else 
-		std::cout << "Whoops! Check if your drill is ready" << std::endl;
+        std::cout << "Whoops! Check if your drill is ready" << std::endl;
 }
 
 void Drill::unplug()
 {
-	isPlugged = false;
-	std::cout << "Unplugged drill" << std::endl;
+    isPlugged = false;
+    std::cout << "Unplugged drill" << std::endl;
 }
 
 void Drill::attachDrillbit(float drillbitWidth)
 {
-	rotationsToSecureBit = 0.8f * drillbitWidth;
+    rotationsToSecureBit = 0.8f * drillbitWidth;
 
-	std::cout << "Securing drill bit... " << std::endl;
+    std::cout << "Securing drill bit... " << std::endl;
 
-	for(int i = 0; i < int(rotationsToSecureBit); ++i)
-		chuckTightness+= rotationsToSecureBit;
+    for(int i = 0; i < int(rotationsToSecureBit); ++i)
+        chuckTightness+= rotationsToSecureBit;
 
-	drillbitAttached = true;	
+    drillbitAttached = true;	
 
-	std::cout << "Drillbit secured" << std::endl;
+    std::cout << "Drillbit secured" << std::endl;
 }
 
 // =========== ElevatorUser Functions ===========
 
 Elevator::ElevatorUser::ElevatorUser() : weight(100.0), destinationFloor(0), currentFloor(0)
 {
-	std::cout << "****** ElevatorUser Created ******" << std::endl;
+    std::cout << "****** ElevatorUser Created ******" << std::endl;
 }
 
 Elevator::ElevatorUser::~ElevatorUser()
 {
-	std::cout << "****** ElevatorUser Destroyed ******" << std::endl;
+    std::cout << "****** ElevatorUser Destroyed ******" << std::endl;
 }
 
 void Elevator::ElevatorUser::callElevator()
 {
-	if(!isInsideElevator)
-		std::cout << "Calling elevator..." << std::endl;
-	else
-		std::cout << "Wait till you exit the elevator" << std::endl;
+    if(!isInsideElevator)
+        std::cout << "Calling elevator..." << std::endl;
+    else
+        std::cout << "Wait till you exit the elevator" << std::endl;
 }
 
 void Elevator::ElevatorUser::enterElevator()
 {
     if(!isInsideElevator)
-	{
-		isInsideElevator = true;
-		std::cout << "You have entered the elevator, now go to a floor" << std::endl;
-	}
-	else
-		std::cout << "You are already inside the elevator" << std::endl;
+    {
+        isInsideElevator = true;
+        std::cout << "You have entered the elevator, now go to a floor" << std::endl;
+    }
+    else
+        std::cout << "You are already inside the elevator" << std::endl;
 }
 
 void Elevator::ElevatorUser::setDestination(int newDestinationFloor)
 {
-	destinationFloor = newDestinationFloor;
-	std::cout << "Destination floor " << destinationFloor << std::endl;
+    destinationFloor = newDestinationFloor;
+    std::cout << "Destination floor " << destinationFloor << std::endl;
 }
 
 void Elevator::ElevatorUser::exitElevator()
 {
-	std::cout << "Exiting... ";
+    std::cout << "Exiting... ";
 
-	if(isInsideElevator)
+    if(isInsideElevator)
     {
         isInsideElevator = false;
-		std::cout << "You have exited the elevator" << std::endl;
+        std::cout << "You have exited the elevator" << std::endl;
     }    
-	else
-		std::cout << "You are not in an elevator yet!" << std::endl;
+    else
+        std::cout << "You are not in an elevator yet!" << std::endl;
 }
 
 void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
 {
-	destinationFloor = newDestinationFloor;
+    destinationFloor = newDestinationFloor;
 
-	if(currentFloor > destinationFloor)
-		for(int i = currentFloor; i > destinationFloor; --i)
-			--currentFloor;
-	else
-		for(int i = currentFloor; i < destinationFloor; ++i)
-			++currentFloor;
-	
-	std::cout << "You have taken the stairs to floor " << currentFloor << std::endl;
+    if(currentFloor > destinationFloor)
+        for(int i = currentFloor; i > destinationFloor; --i)
+            --currentFloor;
+    else
+        for(int i = currentFloor; i < destinationFloor; ++i)
+            ++currentFloor;
+
+    std::cout << "You have taken the stairs to floor " << currentFloor << std::endl;
 }
 
 // ================ Elevator Functions ===================
 
 Elevator::Elevator(std::string elevatorName) : maxWeight(800.0), currentFloor(0), name(elevatorName)
 {
-	std::cout << "****** Elevator Created & Ready for Service ******" << std::endl;
+    std::cout << "****** Elevator Created & Ready for Service ******" << std::endl;
 }
 
 Elevator::~Elevator()
 {
-	std::cout << "****** Elevator " << name << " Destroyed & Out of Service ******" << std::endl;
+    std::cout << "****** Elevator " << name << " Destroyed & Out of Service ******" << std::endl;
 }
 
 void Elevator::goToFloor(int designatedFloor)
 {   
-	if(designatedFloor <= highestFloor && designatedFloor >= lowestFloor)
-	{
-		std::cout << "On the way to floor " << designatedFloor << std::endl;	
+    if(designatedFloor <= highestFloor && designatedFloor >= lowestFloor)
+    {
+        std::cout << "On the way to floor " << designatedFloor << std::endl;	
 
-		while(designatedFloor != currentFloor)
-		(designatedFloor > currentFloor) ? ++currentFloor : --currentFloor; 	
+        while(designatedFloor != currentFloor)
+            (designatedFloor > currentFloor) ? ++currentFloor : --currentFloor; 	
 
-		elevatorArrived = true;
+        elevatorArrived = true;
 
-		std::cout << "Elevator " << name << " arrived to floor " << currentFloor << std::endl;
-	}
-	else
-	{
-		elevatorArrived = false;
-		std::cout << "Floor " << designatedFloor << " does not exist!" << std::endl;
-	}
+        std::cout << "Elevator " << name << " arrived to floor " << currentFloor << std::endl;
+    }
+    else
+    {
+        elevatorArrived = false;
+        std::cout << "Floor " << designatedFloor << " does not exist!" << std::endl;
+    }
 }
 
 void Elevator::onboardPassenger(double userWeight)
 {
-	if(arrived() && canTakePassengerWeight(userWeight))
-		updateWeightCarried(userWeight, true);
-	else
-		std::cout << "This passenger cannot board the elevator" << std::endl;
+    if(arrived() && canTakePassengerWeight(userWeight))
+        updateWeightCarried(userWeight, true);
+    else
+        std::cout << "This passenger cannot board the elevator" << std::endl;
 }
 
 void Elevator::offboardPassenger()
 {
-	if(arrived() && lastUserWeight > 0)
-		updateWeightCarried(lastUserWeight, false);
-	else
-		std::cout << "The elevator has not arrived to a floor yet or no passengers inside" << std::endl;
+    if(arrived() && lastUserWeight > 0)
+        updateWeightCarried(lastUserWeight, false);
+    else
+        std::cout << "The elevator has not arrived to a floor yet or no passengers inside" << std::endl;
 }
 
 void Elevator::updateWeightCarried(double userWeight, bool goingInside)
 {
     if(goingInside)
     {
-		lastUserWeight = userWeight;
+        lastUserWeight = userWeight;
         totalWeightCarried += lastUserWeight;
         std::cout << "Passenger onboarded" << std::endl;
     }
     else
-	{
+    {
         totalWeightCarried -= lastUserWeight;
-    	std::cout << "Passenger offboarded" << std::endl;
-	}
+        std::cout << "Passenger offboarded" << std::endl;
+    }
 }
 
 bool Elevator::canTakePassengerWeight(double userWeight)
 {
-	if((userWeight + totalWeightCarried) > maxWeight)
-		return false;
-		
-	return true;
+    if((userWeight + totalWeightCarried) > maxWeight)
+        return false;
+        
+    return true;
 }
 
 bool Elevator::arrived()
 {
-	return elevatorArrived;
+    return elevatorArrived;
 }
 
 // ============= SchoolBag Functions ===============
@@ -505,7 +505,7 @@ SchoolBag::SchoolBag()
 
 SchoolBag::~SchoolBag()
 {
-	unpackPencilCase();
+    unpackPencilCase();
     std::cout << "****** SchoolBag Destroyed ******" << std::endl;
 }
 
@@ -516,8 +516,8 @@ void SchoolBag::packPencilCase()
         schoolPencilCase.inSchoolBag = true;
         std::cout << "Packing the pencilcase... Good to go!" << std::endl;
     }
-	else if(schoolPencilCase.inSchoolBag)
-		std::cout << "Pencilcase already packed" << std::endl;
+    else if(schoolPencilCase.inSchoolBag)
+        std::cout << "Pencilcase already packed" << std::endl;
     else
     {
         schoolPencilCase.removeItems(schoolPencilCase.maxItemsToHold);
@@ -540,69 +540,69 @@ void SchoolBag::unpackPencilCase()
 
 Building::Building()
 {
-	std::cout << "****** Building Created ******" << std::endl;
+    std::cout << "****** Building Created ******" << std::endl;
 }
 
 Building::~Building()
 {
     closeBuilding();
-	std::cout << "****** Building Destroyed ******" << std::endl;
+    std::cout << "****** Building Destroyed ******" << std::endl;
 }
 
 void Building::closeBuilding()
 {
-	if(buildingEmpty() && isOpen)
-	{
-		isOpen = false;
-		std::cout << "Closing building. Elevators clear..." << std::endl;
-	}
-	else if(!isOpen)
-		std::cout << "Building already closed" << std::endl;
-	else
-		std::cout << "Cannot close building now.. There are still users in the elevator" << std::endl;
+    if(buildingEmpty() && isOpen)
+    {
+        isOpen = false;
+        std::cout << "Closing building. Elevators clear..." << std::endl;
+    }
+    else if(!isOpen)
+        std::cout << "Building already closed" << std::endl;
+    else
+        std::cout << "Cannot close building now.. There are still users in the elevator" << std::endl;
 }
 
 void Building::openBuilding()
 {
-	if(!isOpen)
-	{
-		isOpen = true;
-		std::cout << "Building is now open" << std::endl;
-	}
-	else
-		std::cout << "Building is already open" << std::endl;
+    if(!isOpen)
+    {
+        isOpen = true;
+        std::cout << "Building is now open" << std::endl;
+    }
+    else
+        std::cout << "Building is already open" << std::endl;
 }
 
 bool Building::buildingEmpty()
 {
-	if(elevatorA.totalWeightCarried == 0.0 && elevatorB.totalWeightCarried == 0.0)
-		return true;
+    if(elevatorA.totalWeightCarried == 0.0 && elevatorB.totalWeightCarried == 0.0)
+        return true;
 
-	return false;
+    return false;
 }
 
 void Building::clearBuilding()
 {	
-	if(elevatorA.totalWeightCarried > 0.0)
-		elevatorA.updateWeightCarried(elevatorA.lastUserWeight, false);
-	else if(elevatorB.totalWeightCarried > 0.0)
-		elevatorB.updateWeightCarried(elevatorB.lastUserWeight, false);
-	else
-		std::cout << "No one in the building...";
+    if(elevatorA.totalWeightCarried > 0.0)
+        elevatorA.updateWeightCarried(elevatorA.lastUserWeight, false);
+    else if(elevatorB.totalWeightCarried > 0.0)
+        elevatorB.updateWeightCarried(elevatorB.lastUserWeight, false);
+    else
+        std::cout << "No one in the building...";
 
-	std::cout << "Building cleared." << std::endl;
+    std::cout << "Building cleared." << std::endl;
 }
 
 void Building::callElevatorAAndTakePassenger(int designatedFloor, double userWeight)
 {
-	if(isOpen)
-	{
-		std::cout << "Calling elevator " << elevatorA.name << std::endl;
-		elevatorA.goToFloor(designatedFloor);
-		elevatorA.onboardPassenger(userWeight);
-	}
-	else	
-		std::cout << "Cannot call elevator, building not open yet" << elevatorA.name << std::endl;
+    if(isOpen)
+    {
+        std::cout << "Calling elevator " << elevatorA.name << std::endl;
+        elevatorA.goToFloor(designatedFloor);
+        elevatorA.onboardPassenger(userWeight);
+    }
+    else	
+        std::cout << "Cannot call elevator, building not open yet" << elevatorA.name << std::endl;
 }
 
 // ============= Main ==================
