@@ -235,7 +235,9 @@ void PencilCase::Pencil::sharpen(int rotations)
         }	
     }
     else
+    {
         std::cout << "Pencil sharp enough" << std::endl;
+    }
 }
 
 void PencilCase::Pencil::writeSomething(std::string writing)
@@ -286,7 +288,9 @@ void PencilCase::addItems(int itemsToAdd)
         (numItemsAdded == maxItemsToHold) ?  std::cout << "Pencilcase full!" << std::endl : std::cout << numItemsAdded << " items added..." << std::endl;
     }
     else
+    {
         std::cout << "Open the pencilcase first" << std::endl;
+    }
 }
 
 void PencilCase::removeItems(int itemsToRemove)
@@ -305,10 +309,14 @@ void PencilCase::removeItems(int itemsToRemove)
             std::cout << numItemsAdded << " items remaining" << std::endl;
         }
         else
+        {
             std::cout << "Pencilcase is closed or nothing inside" << std::endl;
+        }
     }
     else
+    {
         std::cout << "Can't remove " << itemsToRemove << " items"  << std::endl;
+    }
 }
 
 // ============= Drill Functions =================
@@ -331,9 +339,13 @@ void Drill::drillHole(int holes)
         std::cout << "Drilling done!!" << std::endl;
     }
     else if(holes < 1)
+    {
         std::cout << "You can't drill " << holes << " holes..." << std::endl;
-    else 
+    }
+    else
+    { 
         std::cout << "Whoops! Check if your drill is ready" << std::endl;
+    }
 }
 
 void Drill::unplug()
@@ -349,7 +361,7 @@ void Drill::attachDrillbit(float drillbitWidth)
     std::cout << "Securing drill bit... " << std::endl;
 
     for(int i = 0; i < int(rotationsToSecureBit); ++i)
-        chuckTightness+= rotationsToSecureBit;
+        chuckTightness += rotationsToSecureBit;
 
     drillbitAttached = true;	
 
@@ -384,7 +396,9 @@ void Elevator::ElevatorUser::enterElevator()
         std::cout << "You have entered the elevator, now go to a floor" << std::endl;
     }
     else
+    {
         std::cout << "You are already inside the elevator" << std::endl;
+    }
 }
 
 void Elevator::ElevatorUser::setDestination(int newDestinationFloor)
@@ -403,7 +417,9 @@ void Elevator::ElevatorUser::exitElevator()
         std::cout << "You have exited the elevator" << std::endl;
     }    
     else
+    {
         std::cout << "You are not in an elevator yet!" << std::endl;
+    }
 }
 
 void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
@@ -513,7 +529,9 @@ void SchoolBag::packPencilCase()
         std::cout << "Packing the pencilcase... Good to go!" << std::endl;
     }
     else if(schoolPencilCase.inSchoolBag)
+    {
         std::cout << "Pencilcase already packed" << std::endl;
+    }
     else
     {
         schoolPencilCase.removeItems(schoolPencilCase.maxItemsToHold);
@@ -524,7 +542,9 @@ void SchoolBag::packPencilCase()
 void SchoolBag::unpackPencilCase()
 {
     if(!schoolPencilCase.inSchoolBag)
+    {
         std::cout << "Pencilcase already unpacked or not in schoolbag" << std::endl;
+    }
     else
     { 
         schoolPencilCase.inSchoolBag = false;
@@ -553,9 +573,13 @@ void Building::closeBuilding()
         std::cout << "Closing building. Elevators clear..." << std::endl;
     }
     else if(!isOpen)
+    {
         std::cout << "Building already closed" << std::endl;
+    }
     else
+    {
         std::cout << "Cannot close building now.. There are still users in the elevator" << std::endl;
+    }
 }
 
 void Building::openBuilding()
@@ -566,7 +590,9 @@ void Building::openBuilding()
         std::cout << "Building is now open" << std::endl;
     }
     else
+    {
         std::cout << "Building is already open" << std::endl;
+    }
 }
 
 bool Building::buildingEmpty()
@@ -597,8 +623,10 @@ void Building::callElevatorAAndTakePassenger(int designatedFloor, double userWei
         elevatorA.goToFloor(designatedFloor);
         elevatorA.onboardPassenger(userWeight);
     }
-    else	
+    else
+    {	
         std::cout << "Cannot call elevator, building not open yet" << elevatorA.name << std::endl;
+    }
 }
 
 // ============= Main ==================
@@ -606,126 +634,85 @@ void Building::callElevatorAAndTakePassenger(int designatedFloor, double userWei
 
 int main()
 {
-   // ============== Pencil ================================
-
-	
+    // ============== Pencil ================================
     PencilCase::Pencil pencil1; 
-
-	pencil1.sharpen(4);
-	pencil1.writeSomething("Writing some text	Writing some text	Writing some text");
-	(pencil1.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
-
-	std::cout << std::endl;
-
-	PencilCase::Pencil pencil2;
-
-	pencil2.writeSomething("Now let's try this other pencil with more writing... Writing some text	Writing some text	Writing some text	Writing some text");
-	(pencil2.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
-	pencil2.sharpen(3);
-	
-	std::cout << std::endl;
-	
-
-	// ============== PencilCase ===========================
-	
-	
-	PencilCase pencilCase1;
-
-	pencilCase1.open();
-	pencilCase1.close();
-	pencilCase1.open();
-	pencilCase1.addItems(12);
-	pencilCase1.removeItems(20);
-
-	std::cout << "Trying the other pencilcase" << std::endl;
-
-	PencilCase pencilCase2;
-
-	pencilCase2.addItems(25);
-	pencilCase2.open();
-	pencilCase2.addItems(25);
-	pencilCase2.removeItems(1);
-	
-
-	// ============== SchoolBag ===========================
-
-	
-	SchoolBag schoolbag1;
-	schoolbag1.schoolPencilCase.open();
-	schoolbag1.schoolPencilCase.addItems(15);
-	schoolbag1.packPencilCase();
-	schoolbag1.schoolPencilCase.addItems(15);
-	schoolbag1.packPencilCase();
-
-	SchoolBag schoolbag2;
-	schoolbag2.schoolPencilCase.open();
-	schoolbag2.schoolPencilCase.addItems(15);
-	schoolbag2.schoolPencilCase.close();
-	
-
-	// ============== Drill =======================
-
-	
-	Drill drill1;
-	drill1.unplug();
-	drill1.attachDrillbit(3.f);
-	drill1.drillHole(5);
-	
-	Drill drill2;
-	drill2.drillHole(20);
-	drill2.attachDrillbit(5.8f);
-	drill2.drillHole(20);
-	drill2.unplug();
-	
-
-	// ============== Elevator & ElevatorUser ============
-
-	
-	Elevator ev1("A1");
-	Elevator::ElevatorUser evu1;
-
-	evu1.callElevator();
-	ev1.goToFloor(evu1.currentFloor);
-	ev1.onboardPassenger(evu1.weight);
-	evu1.enterElevator();
-	evu1.setDestination(13);
-	ev1.goToFloor(evu1.destinationFloor);
-	evu1.exitElevator();
-	ev1.offboardPassenger();
-
-	Elevator ev2("A2");
-	Elevator::ElevatorUser evu2;
-
-	evu2.takeStairsInstead(44);
-	evu2.callElevator();
-	ev2.goToFloor(evu2.currentFloor);
-	evu2.takeStairsInstead(31);
-	evu2.exitElevator();
-	evu2.callElevator();
-	evu2.weight = 901.55;
-	ev2.onboardPassenger(evu2.weight);
-	ev2.offboardPassenger();
-	
-	
-	// ============== Building ==================
-	
-	
-	Building b1;
-
-	b1.openBuilding();
-	b1.callElevatorAAndTakePassenger(14, 901.0);
-	b1.callElevatorAAndTakePassenger(3, 55);
-	b1.clearBuilding();
-
-	Building b2;
-
-	b2.openBuilding();
-	b2.callElevatorAAndTakePassenger(51, 100);
-	b2.clearBuilding();
-	b2.callElevatorAAndTakePassenger(44, 120);
-	b2.openBuilding();
-	b2.clearBuilding();
-	
-
+    pencil1.sharpen(4);
+    pencil1.writeSomething("Writing some text	Writing some text	Writing some text");
+    (pencil1.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
+    std::cout << std::endl;
+    PencilCase::Pencil pencil2;
+    pencil2.writeSomething("Now let's try this other pencil with more writing... Writing some text	Writing some text	Writing some text	Writing some text");
+    (pencil2.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
+    pencil2.sharpen(3);
+    std::cout << std::endl;
+    // ============== PencilCase ===========================
+    PencilCase pencilCase1;
+    pencilCase1.open();
+    pencilCase1.close();
+    pencilCase1.open();
+    pencilCase1.addItems(12);
+    pencilCase1.removeItems(20);
+    std::cout << "Trying the other pencilcase" << std::endl;
+    PencilCase pencilCase2;
+    pencilCase2.addItems(25);
+    pencilCase2.open();
+    pencilCase2.addItems(25);
+    pencilCase2.removeItems(1);
+    // ============== SchoolBag ==========================
+    SchoolBag schoolbag1;
+    schoolbag1.schoolPencilCase.open();
+    schoolbag1.schoolPencilCase.addItems(15);
+    schoolbag1.packPencilCase();
+    schoolbag1.schoolPencilCase.addItems(15);
+    schoolbag1.packPencilCase();
+    SchoolBag schoolbag2;
+    schoolbag2.schoolPencilCase.open();
+    schoolbag2.schoolPencilCase.addItems(15);
+    schoolbag2.schoolPencilCase.close();
+    // ============== Drill =======================
+    Drill drill1;
+    drill1.unplug();
+    drill1.attachDrillbit(3.f);
+    drill1.drillHole(5);
+    Drill drill2;
+    drill2.drillHole(20);
+    drill2.attachDrillbit(5.8f);
+    drill2.drillHole(20);
+    drill2.unplug();
+    // ============== Elevator & ElevatorUser ============
+    Elevator ev1("A1");
+    Elevator::ElevatorUser evu1;
+    evu1.callElevator();
+    ev1.goToFloor(evu1.currentFloor);
+    ev1.onboardPassenger(evu1.weight);
+    evu1.enterElevator();
+    evu1.setDestination(13);
+    ev1.goToFloor(evu1.destinationFloor);
+    evu1.exitElevator();
+    ev1.offboardPassenger();
+    Elevator ev2("A2");
+    Elevator::ElevatorUser evu2;
+    evu2.takeStairsInstead(44);
+    evu2.callElevator();
+    ev2.goToFloor(evu2.currentFloor);
+    evu2.takeStairsInstead(31);
+    evu2.exitElevator();
+    evu2.callElevator();
+    evu2.weight = 901.55;
+    ev2.onboardPassenger(evu2.weight);
+    ev2.offboardPassenger();
+    // ============== Building ==================
+    Building b1;
+    b1.openBuilding();
+    b1.callElevatorAAndTakePassenger(14, 901.0);
+    b1.callElevatorAAndTakePassenger(3, 55);
+    b1.clearBuilding();
+    Building b2;
+    b2.openBuilding();
+    b2.callElevatorAAndTakePassenger(51, 100);
+    b2.clearBuilding();
+    b2.callElevatorAAndTakePassenger(44, 120);
+    b2.openBuilding();
+    b2.clearBuilding();
     std::cout << "good to go!" << std::endl;
 }
