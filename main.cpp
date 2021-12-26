@@ -608,7 +608,7 @@ int main()
 {
    // ============== Pencil ================================
 
-	/*
+	
     PencilCase::Pencil pencil1; 
 
 	pencil1.sharpen(4);
@@ -624,11 +624,11 @@ int main()
 	pencil2.sharpen(3);
 	
 	std::cout << std::endl;
-	*/
+	
 
 	// ============== PencilCase ===========================
 	
-	/*
+	
 	PencilCase pencilCase1;
 
 	pencilCase1.open();
@@ -645,11 +645,11 @@ int main()
 	pencilCase2.open();
 	pencilCase2.addItems(25);
 	pencilCase2.removeItems(1);
-	*/
+	
 
 	// ============== SchoolBag ===========================
 
-	/*
+	
 	SchoolBag schoolbag1;
 	schoolbag1.schoolPencilCase.open();
 	schoolbag1.schoolPencilCase.addItems(15);
@@ -661,11 +661,11 @@ int main()
 	schoolbag2.schoolPencilCase.open();
 	schoolbag2.schoolPencilCase.addItems(15);
 	schoolbag2.schoolPencilCase.close();
-	*/
+	
 
 	// ============== Drill =======================
 
-	/*
+	
 	Drill drill1;
 	drill1.unplug();
 	drill1.attachDrillbit(3.f);
@@ -676,11 +676,11 @@ int main()
 	drill2.attachDrillbit(5.8f);
 	drill2.drillHole(20);
 	drill2.unplug();
-	*/
+	
 
 	// ============== Elevator & ElevatorUser ============
 
-	/*
+	
 	Elevator ev1("A1");
 	Elevator::ElevatorUser evu1;
 
@@ -705,11 +705,11 @@ int main()
 	evu2.weight = 901.55;
 	ev2.onboardPassenger(evu2.weight);
 	ev2.offboardPassenger();
-	*/
+	
 	
 	// ============== Building ==================
 	
-	/*
+	
 	Building b1;
 
 	b1.openBuilding();
@@ -725,7 +725,7 @@ int main()
 	b2.callElevatorAAndTakePassenger(44, 120);
 	b2.openBuilding();
 	b2.clearBuilding();
-	*/
+	
 
     std::cout << "good to go!" << std::endl;
 }
