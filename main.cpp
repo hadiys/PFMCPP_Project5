@@ -202,12 +202,12 @@ struct Building
 
 PencilCase::Pencil::Pencil() : canColor(false), shade("2HB")
 {	
-	std::cout << "****** Pencil Created ******" << std::endl;
+    std::cout << "****** Pencil Created ******" << std::endl;
 }
 
 PencilCase::Pencil::~Pencil()
 {
-	std::cout << "****** Pencil Destroyed ******" << std::endl;
+    std::cout << "****** Pencil Destroyed ******" << std::endl;
 }
 
 void PencilCase::Pencil::sharpen(int rotations)
@@ -278,12 +278,12 @@ void PencilCase::addItems(int itemsToAdd)
     {
         std::cout << "Adding items to pencilcase..." << std::endl;
 
-    while(numItemsAdded < maxItemsToHold && itemsToAdd > 0)
-    {
-        ++numItemsAdded;
-        --itemsToAdd;
-    }
-    (numItemsAdded == maxItemsToHold) ?  std::cout << "Pencilcase full!" << std::endl : std::cout << numItemsAdded << " items added..." << std::endl;
+        while(numItemsAdded < maxItemsToHold && itemsToAdd > 0)
+        {
+            ++numItemsAdded;
+            --itemsToAdd;
+        }
+        (numItemsAdded == maxItemsToHold) ?  std::cout << "Pencilcase full!" << std::endl : std::cout << numItemsAdded << " items added..." << std::endl;
     }
     else
         std::cout << "Open the pencilcase first" << std::endl;
@@ -410,12 +410,8 @@ void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
 {
     destinationFloor = newDestinationFloor;
 
-    if(currentFloor > destinationFloor)
-        for(int i = currentFloor; i > destinationFloor; --i)
-            --currentFloor;
-    else
-        for(int i = currentFloor; i < destinationFloor; ++i)
-            ++currentFloor;
+    while(destinationFloor != currentFloor)
+            (destinationFloor > currentFloor) ? ++currentFloor : --currentFloor; 
 
     std::cout << "You have taken the stairs to floor " << currentFloor << std::endl;
 }
