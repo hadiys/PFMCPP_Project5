@@ -48,7 +48,7 @@ namespace Example
         
 	// 2a) the member function whose function body is almost identical to the std::cout statement in main.
     //Remember to NAME FUNCTIONS WHAT THEY DO.
-    MyFoo::void printDetailedMemberInfo() 
+    void MyFoo::printDetailedMemberInfo() 
     { 
         // 2b) explicitly using 'this' inside this member function.
         std::cout << "MyFoo returnValue(): " << this->returnValue() << " and MyFoo memberVariable: " << this->memberVariable << std::endl; 
@@ -63,7 +63,7 @@ namespace Example
         std::cout << "mf returnValue(): " << mf.returnValue() << " and mf memberVariable: " << mf.memberVariable << std::endl; 
         
         // 2c) calling mf's member function.  the member function's body is almost identical to the cout statement above.
-        mf.produceDetailedOutput();
+        mf.printDetailedMemberInfo();
         return 0;
     }
 }
@@ -97,6 +97,7 @@ struct PencilCase
     void close();	
     void addItems(int itemsToAdd = 1);
     void removeItems(int itemsToRemove);
+    void printNumContainedItems();
 	
     struct Pencil
     {
@@ -112,6 +113,7 @@ struct PencilCase
         void sharpen(int rotations);
         void writeSomething(std::string writing);
         bool isSharp();
+        void printSharpness();
     };
 };
 
@@ -130,6 +132,7 @@ struct Drill
     void drillHole(int holes);
     void unplug();
     void attachDrillbit(float drillbitWidth);
+    void printDrillStatus();
 };
 
 struct Elevator
@@ -153,6 +156,7 @@ struct Elevator
     bool canTakePassengerWeight(double userWeight);
     void updateWeightCarried(double userWeight, bool userExit);
     bool arrived();
+    void printTotalWeightCarried();
 	
     struct ElevatorUser
     {
@@ -170,6 +174,7 @@ struct Elevator
         void setDestination(int newDestinationFloor);
         void exitElevator();
         void takeStairsInstead(int newDestinationFloor);
+        void printPassengerWeight();
     };
 };
 
@@ -182,6 +187,7 @@ struct SchoolBag
 
     void packPencilCase();
     void unpackPencilCase();
+    void checkForPencilCase();
 };
 
 struct Building
@@ -198,6 +204,7 @@ struct Building
     bool buildingEmpty();
     void clearBuilding();
     void callElevatorAAndTakePassenger(int designatedFloor, double passengerWeight);
+    void displayFloorOptions();
 };
 
 // ============Pencil Functions ================
@@ -210,6 +217,11 @@ PencilCase::Pencil::Pencil() : canColor(false), shade("2HB")
 PencilCase::Pencil::~Pencil()
 {
     std::cout << "****** Pencil Destroyed ******" << std::endl;
+}
+
+void PencilCase::Pencil::printSharpness()
+{
+    std::cout << "The sharpness of this pencil: " << this->sharpness << std::endl;
 }
 
 void PencilCase::Pencil::sharpen(int rotations)
@@ -264,6 +276,11 @@ PencilCase::PencilCase() : maxItemsToHold(20), isOpen(false)
 PencilCase::~PencilCase()
 {
     std::cout << "****** PencilCase Destroyed ******" << std::endl;
+}
+
+void PencilCase::printNumContainedItems()
+{
+    std::cout << "Items in the pencilcase: " << this->numItemsAdded << std::endl;
 }
 
 void PencilCase::open()
@@ -333,6 +350,11 @@ Drill::~Drill()
     std::cout << "****** Drill Destroyed ******" << std::endl;
 }
 
+void Drill::printDrillStatus()
+{
+    (this->isPlugged && this->drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
+}
+
 void Drill::drillHole(int holes)
 {
     if(isPlugged && drillbitAttached && holes > 0)
@@ -380,6 +402,11 @@ Elevator::ElevatorUser::ElevatorUser() : weight(100.0), destinationFloor(0), cur
 Elevator::ElevatorUser::~ElevatorUser()
 {
     std::cout << "****** ElevatorUser Destroyed ******" << std::endl;
+}
+
+void Elevator::ElevatorUser::printPassengerWeight()
+{
+    std::cout << "This passenger weighs: " << this->weight << "kg" << std::endl;
 }
 
 void Elevator::ElevatorUser::callElevator()
@@ -444,6 +471,11 @@ Elevator::Elevator(std::string elevatorName) : maxWeight(800.0), currentFloor(0)
 Elevator::~Elevator()
 {
     std::cout << "****** Elevator " << name << " Destroyed & Out of Service ******" << std::endl;
+}
+
+void Elevator::printTotalWeightCarried()
+{
+    std::cout << "Passengers in this elevator weigh " << this->totalWeightCarried << "kg in total" << std::endl;
 }
 
 void Elevator::goToFloor(int designatedFloor)
@@ -523,6 +555,11 @@ SchoolBag::~SchoolBag()
     std::cout << "****** SchoolBag Destroyed ******" << std::endl;
 }
 
+void SchoolBag::checkForPencilCase()
+{
+    (this->schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
+}
+
 void SchoolBag::packPencilCase()
 {
     if(!schoolPencilCase.inSchoolBag && !schoolPencilCase.isOpen)
@@ -565,6 +602,11 @@ Building::~Building()
 {
     closeBuilding();
     std::cout << "****** Building Destroyed ******" << std::endl;
+}
+
+void Building::displayFloorOptions()
+{
+    std::cout << "Highest floor: " << this->elevatorA.highestFloor << "   Lowest floor: " << this->elevatorA.lowestFloor << std::endl;
 }
 
 void Building::closeBuilding()
@@ -637,15 +679,22 @@ void Building::callElevatorAAndTakePassenger(int designatedFloor, double userWei
 int main()
 {
     // ============== Pencil ================================
-    PencilCase::Pencil pencil1; 
+    std::cout << std::endl;
+    
+    PencilCase::Pencil pencil1;
     pencil1.sharpen(4);
     pencil1.writeSomething("Writing some text	Writing some text	Writing some text");
-    (pencil1.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
+    std::cout << "The sharpness of this pencil: " << pencil1.sharpness << std::endl;
+    pencil1.printSharpness();
+
     std::cout << std::endl;
+
     PencilCase::Pencil pencil2;
     pencil2.writeSomething("Now let's try this other pencil with more writing... Writing some text	Writing some text	Writing some text	Writing some text");
-    (pencil2.isSharp()) ? std::cout << "Pencil sharp enough" << std::endl : std::cout << "Pencil needs sharpening" << std::endl;
+    std::cout << "The sharpness of this pencil: " << pencil2.sharpness << std::endl;
+    pencil2.printSharpness();
     pencil2.sharpen(3);
+
     std::cout << std::endl;
     // ============== PencilCase ===========================
     PencilCase pencilCase1;
@@ -653,13 +702,21 @@ int main()
     pencilCase1.close();
     pencilCase1.open();
     pencilCase1.addItems(12);
-    pencilCase1.removeItems(20);
-    std::cout << "Trying the other pencilcase" << std::endl;
+    pencilCase1.removeItems(8);
+    std::cout << "Items in the pencilcase: " << pencilCase1.numItemsAdded << std::endl;
+    pencilCase1.printNumContainedItems();
+
+    std::cout << std::endl;
+
     PencilCase pencilCase2;
     pencilCase2.addItems(25);
     pencilCase2.open();
     pencilCase2.addItems(25);
     pencilCase2.removeItems(1);
+    std::cout << "Items in the pencilcase: " << pencilCase2.numItemsAdded << std::endl;
+    pencilCase2.printNumContainedItems();
+
+    std::cout << std::endl;
     // ============== SchoolBag ==========================
     SchoolBag schoolbag1;
     schoolbag1.schoolPencilCase.open();
@@ -667,20 +724,39 @@ int main()
     schoolbag1.packPencilCase();
     schoolbag1.schoolPencilCase.addItems(15);
     schoolbag1.packPencilCase();
+    (schoolbag1.schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
+    schoolbag1.checkForPencilCase();
+
+    std::cout << std::endl;
+
     SchoolBag schoolbag2;
     schoolbag2.schoolPencilCase.open();
     schoolbag2.schoolPencilCase.addItems(15);
     schoolbag2.schoolPencilCase.close();
+    (schoolbag2.schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
+    schoolbag2.checkForPencilCase();
+
+    std::cout << std::endl;
     // ============== Drill =======================
     Drill drill1;
     drill1.unplug();
     drill1.attachDrillbit(3.f);
     drill1.drillHole(5);
+    (drill1.isPlugged && drill1.drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
+    drill1.printDrillStatus();
+
+    std::cout << std::endl;
+
     Drill drill2;
     drill2.drillHole(20);
     drill2.attachDrillbit(5.8f);
     drill2.drillHole(20);
+    (drill2.isPlugged && drill2.drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
+    drill2.printDrillStatus();
     drill2.unplug();
+
+    std::cout << std::endl;
+
     // ============== Elevator & ElevatorUser ============
     Elevator ev1("A1");
     Elevator::ElevatorUser evu1;
@@ -692,6 +768,13 @@ int main()
     ev1.goToFloor(evu1.destinationFloor);
     evu1.exitElevator();
     ev1.offboardPassenger();
+    std::cout << "This passenger weighs: " << evu1.weight << "kg" << std::endl;
+    evu1.printPassengerWeight();
+    std::cout << "Passengers in this elevator weigh " << ev1.totalWeightCarried << "kg in total" << std::endl;
+    ev1.printTotalWeightCarried();
+
+    std::cout << std::endl;
+
     Elevator ev2("A2");
     Elevator::ElevatorUser evu2;
     evu2.takeStairsInstead(44);
@@ -702,13 +785,25 @@ int main()
     evu2.callElevator();
     evu2.weight = 901.55;
     ev2.onboardPassenger(evu2.weight);
+    std::cout << "Passengers in this elevator weigh " << ev2.totalWeightCarried << "kg in total" << std::endl;
+    ev2.printTotalWeightCarried();
     ev2.offboardPassenger();
+    std::cout << "This passenger weighs: " << evu2.weight << "kg" << std::endl;
+    evu2.printPassengerWeight();
+    
+    std::cout << std::endl;
+    
     // ============== Building ==================
     Building b1;
     b1.openBuilding();
     b1.callElevatorAAndTakePassenger(14, 901.0);
     b1.callElevatorAAndTakePassenger(3, 55);
     b1.clearBuilding();
+    std::cout << "Highest floor: " << b1.elevatorA.highestFloor << "   Lowest floor: " << b1.elevatorA.lowestFloor << std::endl;
+    b1.displayFloorOptions();
+    
+    std::cout << std::endl;
+
     Building b2;
     b2.openBuilding();
     b2.callElevatorAAndTakePassenger(51, 100);
@@ -717,4 +812,6 @@ int main()
     b2.openBuilding();
     b2.clearBuilding();
     std::cout << "good to go!" << std::endl;
+
+    std::cout << std::endl;
 }
