@@ -19,10 +19,11 @@ Create a branch named Part3
       
     This means if you had something like the following in your main() previously: 
 */
+
 #if false
- Axe axe;
- std::cout << "axe sharpness: " << axe.sharpness << "\n";
- #endif
+Axe axe;
+std::cout << "axe sharpness: " << axe.sharpness << "\n";
+#endif
  /*
     you would update that to use your wrappers:
     
@@ -82,6 +83,7 @@ void someMemberFunction(const Axe& axe);
  */
 #include <iostream>
 #include <string>
+#include "LeakedObjectDetector.h"
 
 struct PencilCase
 {
@@ -116,7 +118,11 @@ struct PencilCase
         void writeSomething(std::string writing);
         bool isSharp();
         void printSharpness();
+
+        JUCE_LEAK_DETECTOR(Pencil)
     };
+
+    JUCE_LEAK_DETECTOR(PencilCase)
 };
 
 struct Drill
@@ -135,6 +141,8 @@ struct Drill
     void unplug();
     void attachDrillbit(float drillbitWidth);
     void printDrillStatus();
+
+    JUCE_LEAK_DETECTOR(Drill)
 };
 
 struct Elevator
@@ -177,7 +185,11 @@ struct Elevator
         void exitElevator();
         void takeStairsInstead(int newDestinationFloor);
         void printPassengerWeight();
+
+        JUCE_LEAK_DETECTOR(ElevatorUser)
     };
+
+    JUCE_LEAK_DETECTOR(Elevator)
 };
 
 struct SchoolBag
@@ -190,6 +202,8 @@ struct SchoolBag
     void packPencilCase();
     void unpackPencilCase();
     void checkForPencilCase();
+
+    JUCE_LEAK_DETECTOR(SchoolBag)
 };
 
 struct Building
@@ -207,6 +221,64 @@ struct Building
     void clearBuilding();
     void callElevatorAAndTakePassenger(int designatedFloor, double passengerWeight);
     void displayFloorOptions();
+
+    JUCE_LEAK_DETECTOR(Building)
+};
+
+struct PencilCaseWrapper
+{
+    PencilCaseWrapper(PencilCase* pc) : pointerToPC(pc) {}
+    PencilCase* pointerToPC = nullptr;
+
+    ~PencilCaseWrapper()
+    {
+        delete pointerToPC;
+    }
+};
+
+struct DrillWrapper
+{
+    DrillWrapper(Drill* d) : pointerToDrill(d) {}
+    Drill* pointerToDrill = nullptr;
+
+    ~DrillWrapper()
+    {
+        delete pointerToDrill;
+    }
+
+};
+
+struct ElevatorWrapper
+{
+    ElevatorWrapper(Elevator* ev) : pointerToEV(ev) {}
+    Elevator* pointerToEV = nullptr;
+
+    ~ElevatorWrapper()
+    {
+        delete pointerToEV;
+    }
+};
+
+struct SchoolBagWrapper
+{
+    SchoolBagWrapper(SchoolBag* sb) : pointerToSB(sb) {}
+    SchoolBag* pointerToSB = nullptr;
+
+    ~SchoolBagWrapper()
+    {
+        delete pointerToSB;
+    }
+};
+
+struct BuildingWrapper
+{
+    BuildingWrapper(Building* b) : pointerToBuilding(b) {}
+    Building* pointerToBuilding = nullptr;
+
+    ~BuildingWrapper()
+    {
+        delete pointerToBuilding;
+    }
 };
 
 // ============Pencil Functions ================
@@ -699,120 +771,120 @@ int main()
 
     std::cout << std::endl;
     // ============== PencilCase ===========================
-    PencilCase pencilCase1;
-    pencilCase1.open();
-    pencilCase1.close();
-    pencilCase1.open();
-    pencilCase1.addItems(12);
-    pencilCase1.removeItems(8);
-    std::cout << "Items in the pencilcase: " << pencilCase1.numItemsAdded << std::endl;
-    pencilCase1.printNumContainedItems();
+    PencilCaseWrapper pencilCase1(new PencilCase());
+    pencilCase1.pointerToPC->open();
+    pencilCase1.pointerToPC->close();
+    pencilCase1.pointerToPC->open();
+    pencilCase1.pointerToPC->addItems(12);
+    pencilCase1.pointerToPC->removeItems(8);
+    std::cout << "Items in the pencilcase: " << pencilCase1.pointerToPC->numItemsAdded << std::endl;
+    pencilCase1.pointerToPC->printNumContainedItems();
 
     std::cout << std::endl;
 
-    PencilCase pencilCase2;
-    pencilCase2.addItems(25);
-    pencilCase2.open();
-    pencilCase2.addItems(25);
-    pencilCase2.removeItems(1);
-    std::cout << "Items in the pencilcase: " << pencilCase2.numItemsAdded << std::endl;
-    pencilCase2.printNumContainedItems();
+    PencilCaseWrapper pencilCase2(new PencilCase());
+    pencilCase2.pointerToPC->addItems(25);
+    pencilCase2.pointerToPC->open();
+    pencilCase2.pointerToPC->addItems(25);
+    pencilCase2.pointerToPC->removeItems(1);
+    std::cout << "Items in the pencilcase: " << pencilCase2.pointerToPC->numItemsAdded << std::endl;
+    pencilCase2.pointerToPC->printNumContainedItems();
 
     std::cout << std::endl;
     // ============== SchoolBag ==========================
-    SchoolBag schoolbag1;
-    schoolbag1.schoolPencilCase.open();
-    schoolbag1.schoolPencilCase.addItems(15);
-    schoolbag1.packPencilCase();
-    schoolbag1.schoolPencilCase.addItems(15);
-    schoolbag1.packPencilCase();
-    (schoolbag1.schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
-    schoolbag1.checkForPencilCase();
+    SchoolBagWrapper schoolbag1(new SchoolBag());
+    schoolbag1.pointerToSB->schoolPencilCase.open();
+    schoolbag1.pointerToSB->schoolPencilCase.addItems(15);
+    schoolbag1.pointerToSB->packPencilCase();
+    schoolbag1.pointerToSB->schoolPencilCase.addItems(15);
+    schoolbag1.pointerToSB->packPencilCase();
+    (schoolbag1.pointerToSB->schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
+    schoolbag1.pointerToSB->checkForPencilCase();
 
     std::cout << std::endl;
 
-    SchoolBag schoolbag2;
-    schoolbag2.schoolPencilCase.open();
-    schoolbag2.schoolPencilCase.addItems(15);
-    schoolbag2.schoolPencilCase.close();
-    (schoolbag2.schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
-    schoolbag2.checkForPencilCase();
+    SchoolBagWrapper schoolbag2(new SchoolBag());
+    schoolbag2.pointerToSB->schoolPencilCase.open();
+    schoolbag2.pointerToSB->schoolPencilCase.addItems(15);
+    schoolbag2.pointerToSB->schoolPencilCase.close();
+    (schoolbag2.pointerToSB->schoolPencilCase.inSchoolBag) ? std::cout << "Pencilcase is in schoolbag" << std::endl : std::cout << "Pencilcase is not in schoolbag" << std::endl;
+    schoolbag2.pointerToSB->checkForPencilCase();
 
     std::cout << std::endl;
     // ============== Drill =======================
-    Drill drill1;
-    drill1.unplug();
-    drill1.attachDrillbit(3.f);
-    drill1.drillHole(5);
-    (drill1.isPlugged && drill1.drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
-    drill1.printDrillStatus();
+    DrillWrapper drill1(new Drill());
+    drill1.pointerToDrill->unplug();
+    drill1.pointerToDrill->attachDrillbit(3.f);
+    drill1.pointerToDrill->drillHole(5);
+    (drill1.pointerToDrill->isPlugged && drill1.pointerToDrill->drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
+    drill1.pointerToDrill->printDrillStatus();
 
     std::cout << std::endl;
 
-    Drill drill2;
-    drill2.drillHole(20);
-    drill2.attachDrillbit(5.8f);
-    drill2.drillHole(20);
-    (drill2.isPlugged && drill2.drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
-    drill2.printDrillStatus();
-    drill2.unplug();
+    DrillWrapper drill2(new Drill());
+    drill2.pointerToDrill->drillHole(20);
+    drill2.pointerToDrill->attachDrillbit(5.8f);
+    drill2.pointerToDrill->drillHole(20);
+    (drill2.pointerToDrill->isPlugged && drill2.pointerToDrill->drillbitAttached) ? std::cout << "The drill is ready to work" << std::endl : std::cout << "The drill is not ready to work" << std::endl;
+    drill2.pointerToDrill->printDrillStatus();
+    drill2.pointerToDrill->unplug();
 
     std::cout << std::endl;
 
     // ============== Elevator & ElevatorUser ============
-    Elevator ev1("A1");
+    ElevatorWrapper ev1(new Elevator("A1"));
     Elevator::ElevatorUser evu1;
     evu1.callElevator();
-    ev1.goToFloor(evu1.currentFloor);
-    ev1.onboardPassenger(evu1.weight);
+    ev1.pointerToEV->goToFloor(evu1.currentFloor);
+    ev1.pointerToEV->onboardPassenger(evu1.weight);
     evu1.enterElevator();
     evu1.setDestination(13);
-    ev1.goToFloor(evu1.destinationFloor);
+    ev1.pointerToEV->goToFloor(evu1.destinationFloor);
     evu1.exitElevator();
-    ev1.offboardPassenger();
+    ev1.pointerToEV->offboardPassenger();
     std::cout << "This passenger weighs: " << evu1.weight << "kg" << std::endl;
     evu1.printPassengerWeight();
-    std::cout << "Passengers in this elevator weigh " << ev1.totalWeightCarried << "kg in total" << std::endl;
-    ev1.printTotalWeightCarried();
+    std::cout << "Passengers in this elevator weigh " << ev1.pointerToEV->totalWeightCarried << "kg in total" << std::endl;
+    ev1.pointerToEV->printTotalWeightCarried();
 
     std::cout << std::endl;
 
-    Elevator ev2("A2");
+    ElevatorWrapper ev2(new Elevator("A2"));
     Elevator::ElevatorUser evu2;
     evu2.takeStairsInstead(44);
     evu2.callElevator();
-    ev2.goToFloor(evu2.currentFloor);
+    ev2.pointerToEV->goToFloor(evu2.currentFloor);
     evu2.takeStairsInstead(31);
     evu2.exitElevator();
     evu2.callElevator();
     evu2.weight = 901.55;
-    ev2.onboardPassenger(evu2.weight);
-    std::cout << "Passengers in this elevator weigh " << ev2.totalWeightCarried << "kg in total" << std::endl;
-    ev2.printTotalWeightCarried();
-    ev2.offboardPassenger();
+    ev2.pointerToEV->onboardPassenger(evu2.weight);
+    std::cout << "Passengers in this elevator weigh " << ev2.pointerToEV->totalWeightCarried << "kg in total" << std::endl;
+    ev2.pointerToEV->printTotalWeightCarried();
+    ev2.pointerToEV->offboardPassenger();
     std::cout << "This passenger weighs: " << evu2.weight << "kg" << std::endl;
     evu2.printPassengerWeight();
     
     std::cout << std::endl;
     
     // ============== Building ==================
-    Building b1;
-    b1.openBuilding();
-    b1.callElevatorAAndTakePassenger(14, 901.0);
-    b1.callElevatorAAndTakePassenger(3, 55);
-    b1.clearBuilding();
-    std::cout << "Highest floor: " << b1.elevatorA.highestFloor << "   Lowest floor: " << b1.elevatorA.lowestFloor << std::endl;
-    b1.displayFloorOptions();
+    BuildingWrapper b1(new Building());
+    b1.pointerToBuilding->openBuilding();
+    b1.pointerToBuilding->callElevatorAAndTakePassenger(14, 901.0);
+    b1.pointerToBuilding->callElevatorAAndTakePassenger(3, 55);
+    b1.pointerToBuilding->clearBuilding();
+    std::cout << "Highest floor: " << b1.pointerToBuilding->elevatorA.highestFloor << "   Lowest floor: " << b1.pointerToBuilding->elevatorA.lowestFloor << std::endl;
+    b1.pointerToBuilding->displayFloorOptions();
     
     std::cout << std::endl;
 
-    Building b2;
-    b2.openBuilding();
-    b2.callElevatorAAndTakePassenger(51, 100);
-    b2.clearBuilding();
-    b2.callElevatorAAndTakePassenger(44, 120);
-    b2.openBuilding();
-    b2.clearBuilding();
+    BuildingWrapper b2(new Building());
+    b2.pointerToBuilding->openBuilding();
+    b2.pointerToBuilding->callElevatorAAndTakePassenger(51, 100);
+    b2.pointerToBuilding->clearBuilding();
+    b2.pointerToBuilding->callElevatorAAndTakePassenger(44, 120);
+    b2.pointerToBuilding->openBuilding();
+    b2.pointerToBuilding->clearBuilding();
     std::cout << "good to go!" << std::endl;
 
     std::cout << std::endl;
