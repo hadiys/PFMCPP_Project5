@@ -1,8 +1,8 @@
-#include "Building.h"
-#include "Drill.h"
-#include "Elevator.h"
-#include "PencilCase.h"
-#include "SchoolBag.h"
+struct Building;
+struct Drill;
+struct Elevator;
+struct PencilCase;
+struct SchoolBag;
 
 struct BuildingWrapper
 {
