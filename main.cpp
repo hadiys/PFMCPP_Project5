@@ -43,15 +43,15 @@
  send me a DM to review your pull request when the project is ready for review.
  Wait for my code review.
  */
-#pragma once
 #include <iostream>
 #include <string>
-#include "Wrappers.h"
 #include "Building.h"
 #include "Drill.h"
 #include "Elevator.h"
 #include "PencilCase.h"
 #include "SchoolBag.h"
+
+#include "Wrappers.h"
 
 int main()
 {

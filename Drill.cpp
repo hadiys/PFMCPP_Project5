@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include <string>
 #include "Drill.h"

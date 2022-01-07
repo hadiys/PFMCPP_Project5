@@ -1,3 +1,5 @@
+#pragma once
+
 struct Building;
 struct Drill;
 struct Elevator;

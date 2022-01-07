@@ -1,10 +1,10 @@
-#pragma once
 #include "Wrappers.h"
 #include "Building.h"
 #include "Drill.h"
 #include "Elevator.h"
 #include "PencilCase.h"
 #include "SchoolBag.h"
+
 
 BuildingWrapper::BuildingWrapper(Building* b) : pointerToBuilding(b) {}
 
