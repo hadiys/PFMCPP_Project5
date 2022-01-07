@@ -45,11 +45,7 @@
  */
 #include <iostream>
 #include <string>
-#include "ElevatorWrapper.h"
-#include "DrillWrapper.h"
-#include "BuildingWrapper.h"
-#include "PencilCaseWrapper.h"
-#include "SchoolBagWrapper.h"
+#include "Wrappers.h"
 
 int main()
 {
@@ -139,10 +135,10 @@ int main()
 
     std::cout << std::endl;
     
-    // ============== Elevator & ElevatorUser ============
+    // ============== Elevator & User ============
     
     ElevatorWrapper ev1(new Elevator("A1"));
-    Elevator::ElevatorUser evu1;
+    Elevator::User evu1;
     evu1.callElevator();
     ev1.pointerToEV->goToFloor(evu1.currentFloor);
     ev1.pointerToEV->onboardPassenger(evu1.weight);
@@ -159,7 +155,7 @@ int main()
     std::cout << std::endl;
 
     ElevatorWrapper ev2(new Elevator("A2"));
-    Elevator::ElevatorUser evu2;
+    Elevator::User evu2;
     evu2.takeStairsInstead(44);
     evu2.callElevator();
     ev2.pointerToEV->goToFloor(evu2.currentFloor);

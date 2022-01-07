@@ -2,22 +2,22 @@
 #include <string>
 #include "Elevator.h"
 
-Elevator::ElevatorUser::ElevatorUser() : weight(100.0), destinationFloor(0), currentFloor(0)
+Elevator::User::User() : weight(100.0), destinationFloor(0), currentFloor(0)
 {
-    std::cout << "****** ElevatorUser Created ******" << std::endl;
+    std::cout << "****** User Created ******" << std::endl;
 }
 
-Elevator::ElevatorUser::~ElevatorUser()
+Elevator::User::~User()
 {
-    std::cout << "****** ElevatorUser Destroyed ******" << std::endl;
+    std::cout << "****** User Destroyed ******" << std::endl;
 }
 
-void Elevator::ElevatorUser::printPassengerWeight()
+void Elevator::User::printPassengerWeight()
 {
     std::cout << "This passenger weighs: " << this->weight << "kg" << std::endl;
 }
 
-void Elevator::ElevatorUser::callElevator()
+void Elevator::User::callElevator()
 {
     if(!isInsideElevator)
         std::cout << "Calling elevator..." << std::endl;
@@ -25,7 +25,7 @@ void Elevator::ElevatorUser::callElevator()
         std::cout << "Wait till you exit the elevator" << std::endl;
 }
 
-void Elevator::ElevatorUser::enterElevator()
+void Elevator::User::enterElevator()
 {
     if(!isInsideElevator)
     {
@@ -38,13 +38,13 @@ void Elevator::ElevatorUser::enterElevator()
     }
 }
 
-void Elevator::ElevatorUser::setDestination(int newDestinationFloor)
+void Elevator::User::setDestination(int newDestinationFloor)
 {
     destinationFloor = newDestinationFloor;
     std::cout << "Destination floor " << destinationFloor << std::endl;
 }
 
-void Elevator::ElevatorUser::exitElevator()
+void Elevator::User::exitElevator()
 {
     std::cout << "Exiting... ";
 
@@ -59,7 +59,7 @@ void Elevator::ElevatorUser::exitElevator()
     }
 }
 
-void Elevator::ElevatorUser::takeStairsInstead(int newDestinationFloor)
+void Elevator::User::takeStairsInstead(int newDestinationFloor)
 {
     destinationFloor = newDestinationFloor;
 

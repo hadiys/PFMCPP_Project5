@@ -23,7 +23,7 @@ struct Elevator
     bool arrived();
     void printTotalWeightCarried();
 	
-    struct ElevatorUser
+    struct User
     {
         double weight;
         int destinationFloor;
@@ -31,8 +31,8 @@ struct Elevator
         bool isInsideElevator = false;
         bool canExit = true;
 
-        ElevatorUser();
-        ~ElevatorUser();
+        User();
+        ~User();
 
         void callElevator();
         void enterElevator();
@@ -41,7 +41,7 @@ struct Elevator
         void takeStairsInstead(int newDestinationFloor);
         void printPassengerWeight();
 
-        JUCE_LEAK_DETECTOR(ElevatorUser)
+        JUCE_LEAK_DETECTOR(User)
     };
 
     JUCE_LEAK_DETECTOR(Elevator)
